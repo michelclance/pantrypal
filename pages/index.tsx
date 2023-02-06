@@ -1,19 +1,26 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from '@next/font/google'
-import styles from '../styles/Home.module.css'
-import LandingPage from '../components/NavBar'
+import React, { useState } from 'react';
+import Pantry from './Pantry';
+import NavBar from './NavBar';
+import { Provider } from "react-redux";
+import store from "../components/store";
 
-const inter = Inter({ subsets: ['latin'] })
 
-export default function Home() {
+type HomeProps = {
+  setRecipeText: React.Dispatch<React.SetStateAction<string | undefined>>;
+};
+
+const Home: React.FC<HomeProps> = ({ setRecipeText }) => {
+  const [showPantry, setShowPantry] = useState(false);
+  const [recipeText, setRecipeTextState] = useState<string | undefined>(undefined);
+
   return (
+    <Provider store={store}>
     <div>
-      <head>
-        <title>PantryPal</title>
-      </head>
-      <LandingPage />
-      {/* Other page content goes here */}
+      {showPantry && <Pantry setRecipeText={setRecipeText} />}
+      <NavBar recipeText={recipeText} setShowPantry={setShowPantry} />
     </div>
-  )
-}
+    </Provider>
+  );
+};
+
+export default Home;

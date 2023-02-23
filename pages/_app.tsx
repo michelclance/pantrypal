@@ -1,19 +1,12 @@
-import React from "react";
-import { Provider } from "react-redux";
-import { PersistGate } from "redux-persist/integration/react";
-import store, { persistor } from "/Users/michaelclancy/pantry-pal/components/store";
+import { FormContextProvider } from '../components/contextobject';
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
-import { persistStore } from "redux-persist";
+import React, { createContext, useState } from 'react';
 
 export default function App({ Component, pageProps }: AppProps) {
-  return (
-    <Provider store={store}>
-          <PersistGate persistor={persistStore(store)}>
-      <div className="h-full">
+  return ( 
+      <FormContextProvider>
         <Component {...pageProps} />
-      </div>
-      </PersistGate>
-    </Provider>
-  )
-}
+      </FormContextProvider>
+  );
+};

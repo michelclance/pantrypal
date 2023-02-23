@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { Fragment, JSXElementConstructor, Key, ReactElement, ReactFragment, ReactPortal, useEffect, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import {
   Bars3Icon,
@@ -10,27 +10,40 @@ import {
   UsersIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline'
+import { useRouter } from 'next/router'
+import ProfileButton from '../components/conditionallogin'
+
 
 const navigation = [
-  { name: 'Pantry', href: '/Pantry', icon: HomeIcon, current: true },
+  { name: 'Pantry', href: '/Pantry', icon: HomeIcon, current: false },
   { name: 'Explainer', href: '#', icon: UsersIcon, current: false },
-  { name: 'Saved Recipes', href: '#', icon: FolderIcon, current: false },
+  { name: 'Saved Recipes (coming soon)', href: '#', icon: FolderIcon, current: false },
   { name: 'Feedback', href: '#', icon: CalendarIcon, current: false },
-  { name: 'Documents', href: '#', icon: InboxIcon, current: false },
-  { name: 'Reports', href: '#', icon: ChartBarIcon, current: false },
+  { name: 'About', href: '#', icon: InboxIcon, current: false },
+  { name: 'Contact', href: '#', icon: ChartBarIcon, current: false },
 ]
 
 function classNames(...classes: (string | undefined | null)[]): string {
   return classes.filter(Boolean).join(' ')
 }
-
-interface NavBarProps {
-  recipeText: string | undefined;
-  setShowPantry: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const NavBar: React.FC<NavBarProps> = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false)
+const NavBar = () => {
+  const router = useRouter();
+  const recipeSuggestions = router.query.recipeSuggestions;
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  
+  useEffect(() => {
+    fetch('/api/generate-recipes', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ ingredients: 'ingredients' })
+    })
+    .then(response => response.json())
+    .then(data => console.log(data.recipeSuggestions))
+    .catch(error => console.error(error));
+  }, []);
+  
   return (
     <>
       <div>
@@ -113,19 +126,7 @@ const NavBar: React.FC<NavBarProps> = () => {
                   </div>
                   <div className="flex flex-shrink-0 border-t border-gray-200 p-4">
                     <a href="#" className="group block flex-shrink-0">
-                      <div className="flex items-center">
-                        <div>
-                          <img
-                            className="inline-block h-10 w-10 rounded-full"
-                            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                            alt=""
-                          />
-                        </div>
-                        <div className="ml-3">
-                          <p className="text-base font-medium text-gray-700 group-hover:text-gray-900">Tom Cook</p>
-                          <p className="text-sm font-medium text-gray-500 group-hover:text-gray-700">View profile</p>
-                        </div>
-                      </div>
+                    <ProfileButton />
                     </a>
                   </div>
                 </Dialog.Panel>
@@ -171,19 +172,9 @@ const NavBar: React.FC<NavBarProps> = () => {
             </div>
             <div className="flex flex-shrink-0 border-t border-gray-200 p-4">
               <a href="#" className="group block w-full flex-shrink-0">
-                <div className="flex items-center">
-                  <div>
-                    <img
-                      className="inline-block h-9 w-9 rounded-full"
-                      src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                      alt=""
-                    />
-                  </div>
-                  <div className="ml-3">
-                    <p className="text-sm font-medium text-gray-700 group-hover:text-gray-900">Tom Cook</p>
-                    <p className="text-xs font-medium text-gray-500 group-hover:text-gray-700">View profile</p>
-                  </div>
-                </div>
+              <div>
+      <ProfileButton />
+    </div>
               </a>
             </div>
           </div>
@@ -200,25 +191,26 @@ const NavBar: React.FC<NavBarProps> = () => {
             </button>
           </div>
           <main className="flex-1">
-            <div className="py-6">
-              <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
-                <h1 className="text-2xl font-semibold text-gray-900">Dashboard</h1>
-              </div>
-              <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
-                {/* Replace with your content */}
-                <div className="py-4">
-                <div className="h-96 rounded-lg border-4 border-dashed border-gray-200">
-                
-                </div>
-
-                </div>
-                {/* /End replace */}
-              </div>
+      <div className="py-6">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
+          <h1 className="text-2xl font-semibold text-gray-900">Recipe Suggestions</h1>
+        </div>
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
+          <div className="py-4">
+            <div className="h-96 rounded-lg border-4 border-dashed border-gray-200">
+   {/* co pilot render the api response */}
+   <div>
+  <p>{recipeSuggestions}</p>
+</div>
             </div>
-          </main>
+          </div>
+        </div>
+      </div>
+    </main>
+
         </div>
       </div>
     </>
   )
 }
-export default NavBar
+export default

@@ -138,8 +138,8 @@ const NavBar = () => {
             <div className="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
               <div className="flex flex-shrink-0 items-center px-2">
               <img
-          className="h-20 w-auto"
-          src="images/PantrylogoLarge.png"
+          className="h-30 w-auto"
+          src="images/munch.jpeg"
           alt="Your Company"
         />
               </div>

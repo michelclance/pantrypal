@@ -15,6 +15,7 @@ import Image from 'next/image';
 
 
 
+
 const navigation = [
   { name: 'Pantry', href: '/Pantry', icon: BuildingStorefrontIcon, current: false },
   { name: 'Explainer', href: '#', icon: PresentationChartBarIcon, current: false },

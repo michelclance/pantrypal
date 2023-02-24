@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
 
-mongoose.connect("mongodb+srv://m_clancy:g9fall4tlwbdDr8O@pantrypal.iqrsyyo.mongodb.net/?retryWrites=true&w=majority", {
+mongoose.connect(MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -46,7 +46,7 @@ app.post("/api/register", registerValidationMiddleware, async (req, res) => {
     const user = new User({ email, password: hashedPassword });
     await user.save();
 
-    const token = jwt.sign({ id: user._id }, "juicyjuicy");
+    const token = jwt.sign({ id: user._id }, JWT_SECRET);
     res.send({ token });
   } catch (error) {
     console.error(error);
@@ -76,7 +76,7 @@ app.post("/api/login", loginValidationMiddleware, async (req, res) => {
       return res.status(401).send("Invalid password");
     }
 
-    const token = jwt.sign({ id: user._id }, "juicyjuicy");
+    const token = jwt.sign({ id: user._id }, JWT_SECRET);
     res.send({ token });
   } catch (error) {
     console.error(error);
@@ -93,7 +93,7 @@ const authMiddleware = (req, res, next) => {
   const token = authHeader.split(" ")[1];
 
   try {
-    const decodedToken = jwt.verify(token, "juicyjuicy");
+    const decodedToken = jwt.verify(token, JWT_SECRET);
     req.userData = { userId: decodedToken.userId };
     next();
   } catch (error) {

@@ -1,11 +1,16 @@
 import React from "react";
 
 interface RecipeSuggestionsProps {
-  recipeSuggestions: string | string[];
+  recipeSuggestions?: string | string[]; // Make the prop optional
   mood?: string;
 }
 
 const RecipeSuggestions: React.FC<RecipeSuggestionsProps> = ({ recipeSuggestions, mood }) => {
+  // If recipeSuggestions is not available, return null
+  if (!recipeSuggestions) {
+    return null;
+  }
+
   let paragraphs: string[] = [];
 
   if (Array.isArray(recipeSuggestions)) {
@@ -18,15 +23,12 @@ const RecipeSuggestions: React.FC<RecipeSuggestionsProps> = ({ recipeSuggestions
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       {paragraphs.map((paragraph, index) => (
         <div key={index} className="bg-white p-4 rounded-lg shadow-md">
-          <h2 className="text-lg font-semibold mb-2">{mood ? `${mood} recipe` : "Recipe"}</h2>
+          <h2 className="text-lg font-bold mb-2">{mood ? `${mood} Recipe` : ""}</h2>
           {paragraph.split("\n").map((line, i) => (
-            <p key={i} className="text-gray-600 mb-2">
+            <p key={i} className="text-gray-600 mb-2 text-bold">
               {line}
             </p>
           ))}
-          <button className="flex items-center text-blue-500 hover:text-blue-700 transition-colors">
-            Save Recipe
-          </button>
         </div>
       ))}
     </div>
@@ -34,3 +36,4 @@ const RecipeSuggestions: React.FC<RecipeSuggestionsProps> = ({ recipeSuggestions
 };
 
 export default RecipeSuggestions;
+

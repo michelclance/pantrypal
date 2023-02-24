@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import axios from 'axios';
 
-
 interface LoginSignupFormProps {
   onLoginSuccess: (username: string) => void;
   onSignUpSuccess: (username: string) => void;

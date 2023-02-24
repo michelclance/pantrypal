@@ -9,7 +9,6 @@ import {
   BuildingStorefrontIcon
 } from '@heroicons/react/24/outline'
 import { useRouter } from 'next/router'
-import ProfileButton from '../components/conditionallogin'
 import RecipeSuggestions from '../components/RecipeSuggestions'
 import Image from 'next/image';
 
@@ -122,7 +121,6 @@ const NavBar = () => {
                   </div>
                   <div className="flex flex-shrink-0 border-t border-gray-200 p-4">
                     <a href="#" className="group block flex-shrink-0">
-                    <ProfileButton />
                     </a>
                   </div>
                 </Dialog.Panel>
@@ -137,13 +135,14 @@ const NavBar = () => {
           {/* Sidebar component, swap this element with another sidebar if you like */}
           <div className="flex min-h-0 flex-1 flex-col border-r border-gray-200 bg-white">
             <div className="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
-              <div className="flex flex-shrink-0 items-center px-2">
-              <img
-          className="h-30 w-auto"
-          src="images/munch.jpeg"
-          alt="Your Company"
-        />
-              </div>
+            <div className="flex flex-shrink-0 items-center px-2">
+  <Image
+    src="/images/munch.jpeg"
+    alt="Munch Logo"
+    width={200}
+    height={100}
+  />
+</div>
               <nav className="mt-5 flex-1 space-y-1 bg-white px-2">
                 {navigation.map((item) => (
                   <a
@@ -169,7 +168,6 @@ const NavBar = () => {
             <div className="flex flex-shrink-0 border-t border-gray-200 p-4">
               <a href="#" className="group block w-full flex-shrink-0">
               <div>
-      <ProfileButton />
     </div>
               </a>
             </div>

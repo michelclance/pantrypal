@@ -3,6 +3,7 @@ import axios from 'axios';
 
 const configuration = new Configuration({
   apiKey: process.env.API_KEY,
+  basePath: 'https://certifiedmunch.com' 
 });
 const openai = new OpenAIApi(configuration);
 

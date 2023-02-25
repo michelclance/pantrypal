@@ -1,5 +1,6 @@
 import { Configuration, OpenAIApi } from "openai";
 import axios from 'axios';
+import cors from 'cors'; // Import the cors package
 
 const configuration = new Configuration({
   apiKey: process.env.API_KEY,
@@ -7,43 +8,61 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
-export default async function handler(req, res) {
-  if (!configuration.apiKey) {
-    res.status(500).json({
-      error: {
-        message: "OpenAI API key not configured, please follow instructions in README.md",
-      }
-    });
-    return;
-  }
+const corsMiddleware = cors({
+  origin: '*', // set the origin to '*' to allow any domain to access your API
+  credentials: true, // allow cookies to be passed along from the client
+  methods: ['GET', 'OPTIONS', 'PATCH', 'DELETE', 'POST', 'PUT'], // set the allowed HTTP methods
+  allowedHeaders: ['Authorization', 'Content-Type'] // set the allowed headers in the request
+});
 
-  const generateRecipes = async (ingredients, mood) => { 
-    let prompt;
-  
-    switch (mood) {
-      case "spicy_and_hearty":
-        prompt = `Here is a list of ingredients: ${ingredients}. Suggest 5 spicy and hearty recipes based on the ingredients. Structure the response Recipe: \n Ingredients: \n Instructions:`;
-        break;
-      case "sweet_and_savory":
-        prompt = `Here is a list of ingredients: ${ingredients}. Suggest 5 sweet and savory recipes using these ingredients. Structure the response Recipe: \n Ingredients: \n Instructions:`;
-        break;
-        case "healthy_and_light":
-          prompt = `Here is a list of ingredients: ${ingredients}. Suggest 5 healthy and light recipes using these ingredients. Structure the response Recipe: \n Ingredients: \n Instructions:`;
+export default async function handler(req, res) {
+  // Call cors as middleware
+  corsMiddleware(req, res, () => {
+    // Your API code goes here
+    if (req.method === 'OPTIONS') {
+      res.status(200).end();
+      return;
+    }
+
+    if (!configuration.apiKey) {
+      res.status(500).json({
+        error: {
+          message: "OpenAI API key not configured, please follow instructions in README.md",
+        }
+      });
+      return;
+    }
+  });
+}
+
+
+    const generateRecipes = async (ingredients, mood) => { 
+      let prompt;
+    
+      switch (mood) {
+        case "spicy_and_hearty":
+          prompt = `Here is a list of ingredients: ${ingredients}. Suggest 5 spicy and hearty recipes based on the ingredients. Structure the response Recipe: \n Ingredients: \n Instructions:`;
           break;
-        case "quick_and_easy":
-        prompt = `Here is a list of ingredients: ${ingredients}. Suggest 5 quick and easy recipes using these ingredients. Structure the response Recipe: \n Ingredients: \n Instructions:`;
-        break;
-        case "comfort_food":
-        prompt = `Here is a list of ingredients: ${ingredients}. Suggest 5 comfort food recipes using these ingredients. Structure the response Recipe: \n Ingredients: \n Instructions:`;
-        break;
-        case "fancy":
-        prompt = `Here is a list of ingredients: ${ingredients}. Suggest 5 fancy recipes using these ingredients. Structure the response Recipe: \n Ingredients: \n Instructions:`;
-        break;
-        case "kid_friendly":
-        prompt = `Here is a list of ingredients: ${ingredients}. Suggest 5 kid friendly recipes using these ingredients. Structure the response Recipe: \n Ingredients: \n Instructions:`;
-        break;
-        case "vegetarian":
-        prompt = `Here is a list of ingredients: ${ingredients}. Suggest 5 vegetarian recipes using these ingredients. Structure the response Recipe: \n Ingredients: \n Instructions:`;
+        case "sweet_and_savory":
+          prompt = `Here is a list of ingredients: ${ingredients}. Suggest 5 sweet and savory recipes using these ingredients. Structure the response Recipe: \n Ingredients: \n Instructions:`;
+          break;
+          case "healthy_and_light":
+            prompt = `Here is a list of ingredients: ${ingredients}. Suggest 5 healthy and light recipes using these ingredients. Structure the response Recipe: \n Ingredients: \n Instructions:`;
+            break;
+          case "quick_and_easy":
+          prompt = `Here is a list of ingredients: ${ingredients}. Suggest 5 quick and easy recipes using these ingredients. Structure the response Recipe: \n Ingredients: \n Instructions:`;
+          break;
+          case "comfort_food":
+          prompt = `Here is a list of ingredients: ${ingredients}. Suggest 5 comfort food recipes using these ingredients. Structure the response Recipe: \n Ingredients: \n Instructions:`;
+          break;
+          case "fancy":
+          prompt = `Here is a list of ingredients: ${ingredients}. Suggest 5 fancy recipes using these ingredients. Structure the response Recipe: \n Ingredients: \n Instructions:`;
+          break;
+          case "kid_friendly":
+          prompt = `Here is a list of ingredients: ${ingredients}. Suggest 5 kid friendly recipes using these ingredients. Structure the response Recipe: \n Ingredients: \n Instructions:`;
+          break;
+          case "vegetarian":
+          prompt = `Here is a list of ingredients: ${ingredients}. Suggest 5 vegetarian recipes using these ingredients. Structure the response Recipe: \n Ingredients: \n Instructions:`;
         break;
         case "vegan":
         prompt = `Here is a list of ingredients: ${ingredients}. Suggest 5 vegan recipes using these ingredients. Structure the response Recipe: \n Ingredients: \n Instructions:`;
@@ -98,5 +117,5 @@ export default async function handler(req, res) {
       }
     });
   }
-}
+
 

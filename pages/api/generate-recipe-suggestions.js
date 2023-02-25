@@ -4,7 +4,7 @@ import cors from 'cors'; // Import the cors package
 
 const configuration = new Configuration({
   apiKey: process.env.API_KEY,
-  basePath: 'https://certifiedmunch.com' 
+  basePath: 'https://certifiedmunch.com'
 });
 const openai = new OpenAIApi(configuration);
 
@@ -32,13 +32,10 @@ export default async function handler(req, res) {
       });
       return;
     }
-  })
-}
 
-
-    const generateRecipes = async (ingredients, mood) => { 
+    const generateRecipes = async (ingredients, mood) => {
       let prompt;
-    
+
       switch (mood) {
         case "spicy_and_hearty":
           prompt = `Here is a list of ingredients: ${ingredients}. Suggest 5 spicy and hearty recipes based on the ingredients. Structure the response Recipe: \n Ingredients: \n Instructions:`;
@@ -65,57 +62,51 @@ export default async function handler(req, res) {
           prompt = `Here is a list of ingredients: ${ingredients}. Suggest 5 vegetarian recipes using these ingredients. Structure the response Recipe: \n Ingredients: \n Instructions:`;
         break;
         case "vegan":
-        prompt = `Here is a list of ingredients: ${ingredients}. Suggest 5 vegan recipes using these ingredients. Structure the response Recipe: \n Ingredients: \n Instructions:`;
-        break;
-      // add more cases for other moods
-      default:
-        prompt = `Here is a list of ingredients: ${ingredients}. Suggest 5 recipes using these ingredients. Structure the response Recipe: \n Ingredients: \n Instructions:`;
-        break;
-    }
-  
-    try {
-      const response = await openai.createCompletion({
-        model: "text-davinci-003",
-        prompt: prompt,
-        max_tokens: 500,
-      });
-      if (response.status === 200) {
-        const recipeSuggestions = [response.data.choices[0].text.trim()];
-        res.status(200).send(recipeSuggestions);
-      } else {
-        throw new Error(`Unexpected status code: ${response.status}`);
+          prompt = `Here is a list of ingredients: ${ingredients}. Suggest 5 vegan recipes using these ingredients. Structure the response Recipe: \n Ingredients: \n Instructions:`;
+          break;
+        default:
+          prompt = `Here is a list of ingredients: ${ingredients}. Suggest 5 recipes using these ingredients. Structure the response Recipe: \n Ingredients: \n Instructions:`;
+          break;
       }
-    } catch (error) {
-      console.error(`Error with OpenAI API request: ${error.message}`);
-      res.status(500).json({
+
+      const response = await openai.complete({
+        engine: "davinci",
+        prompt: prompt,
+        maxTokens: 100,
+        temperature: 0.9,
+        topP: 1,
+        presencePenalty: 0,
+        frequencyPenalty: 0,
+        bestOf: 1,
+        n: 5,
+        stream: false,
+        stop: ["\n"]
+      });
+
+      return response.data.choices.map((choice) => {
+        const [recipe, ingredients, instructions] = choice.text.split("\n");
+        return {
+          recipe,
+          ingredients,
+          instructions
+        };
+      });
+    };
+
+    const { ingredients, mood } = req.body;
+    if (!ingredients) {
+      res.status(400).json({
         error: {
-          message: error.message,
+          message: "Missing ingredients parameter"
         }
       });
+      return;
     }
-  };
-  
 
-  const { ingredients } = req.body;
-  if (!ingredients) {
-    res.status(400).json({
-      error: {
-        message: "Please provide a list of ingredients in the request body"
-      }
+    const recipes = await generateRecipes(ingredients, mood);
+
+    res.status(200).json({
+      recipes
     });
-    return;
-  }
-
-  try {
-    const recipeSuggestions = await generateRecipes(ingredients);
-    res.status(200).send(recipeSuggestions);
-  } catch (error) {
-    console.error(`Error with OpenAI API request: ${error.message}`);
-    res.status(500).json({
-      error: {
-        message: error.message,
-      }
-    });
-  }
-
-
+  });
+}

@@ -17,7 +17,7 @@ const corsMiddleware = cors({
 
 export default async function handler(req, res) {
   // Call cors as middleware
-  corsMiddleware(req, res, () => {
+  corsMiddleware(req, res, async () => {
     // Your API code goes here
     if (req.method === 'OPTIONS') {
       res.status(200).end();
@@ -32,7 +32,7 @@ export default async function handler(req, res) {
       });
       return;
     }
-  });
+  })
 }
 
 

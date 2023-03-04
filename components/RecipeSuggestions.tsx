@@ -37,3 +37,4 @@ const RecipeSuggestions: React.FC<RecipeSuggestionsProps> = ({ recipeSuggestions
 
 export default RecipeSuggestions;
 
+

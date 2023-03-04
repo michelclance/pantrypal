@@ -7,7 +7,9 @@ import React, { createContext, useState } from 'react';
 export default function App({ Component, pageProps }: AppProps) {
   return ( 
       <FormContextProvider>
+
         <Component {...pageProps} />
+
       </FormContextProvider>
   );
 };

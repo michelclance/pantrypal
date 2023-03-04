@@ -14,7 +14,6 @@ import Image from 'next/image';
 
 
 
-
 const navigation = [
   { name: 'Pantry', href: '/Pantry', icon: BuildingStorefrontIcon, current: false },
   { name: 'Explainer', href: '#', icon: PresentationChartBarIcon, current: false },
@@ -29,19 +28,6 @@ const NavBar = () => {
   const router = useRouter();
   const recipeSuggestions: string | string[] = router.query.recipeSuggestions || "";
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  
-  useEffect(() => {
-    fetch('/api/generate-recipe-suggestions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ ingredients: 'ingredients' })
-    })
-    .then(response => response.json())
-    .then(data => console.log(data.recipeSuggestions))
-    .catch(error => console.error(error));
-  }, []);
   
   return (
     <>

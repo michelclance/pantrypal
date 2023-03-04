@@ -1,7 +1,4 @@
 import React from "react";
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 interface RecipeSuggestionsProps {
   recipeSuggestions?: string | string[]; // Make the prop optional

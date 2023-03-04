@@ -44,8 +44,6 @@ const Form: React.FC = () => {
     });
   };
 
-
-  
   return (
     <div className="px-10">
       <Link href="/">

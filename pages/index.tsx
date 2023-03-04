@@ -31,6 +31,9 @@ const NavBar = () => {
   
   return (
     <>
+    <header>
+      <title>Certified Munch</title>
+    </header>
       <div>
         <Transition.Root show={sidebarOpen} as={Fragment}>
           <Dialog as="div" className="relative z-40 md:hidden" onClose={setSidebarOpen}>

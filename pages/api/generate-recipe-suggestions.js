@@ -77,7 +77,6 @@ export default async function handler(req, res) {
     }
   };
   
-
   const { ingredients } = req.body;
   if (!ingredients) {
     res.status(400).json({

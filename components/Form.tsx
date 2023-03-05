@@ -50,7 +50,7 @@ const Form: React.FC = () => {
   return (
     <div className="px-10">
       <Link href="/">
-        <HomeIcon className="h-8 w-8 mr-1 flex items-center text-gray-800" />
+        <HomeIcon className="h-9 w-9 mr-1 flex items-center text-gray-800" />
       </Link>
   
       <h2 className="text-2xl text-center font-medium">Your Pantry</h2>

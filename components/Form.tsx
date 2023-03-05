@@ -4,8 +4,10 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { HomeIcon } from '@heroicons/react/24/outline';
+import Loader from './Loader';
 
 const Form: React.FC = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [mood, setMood] = useState('');
   const { form, addIngredient, removeIngredient } = useContext(FormContext);
   const [newIngredient, setNewIngredient] = useState<Partial<Ingredient>>({
@@ -36,6 +38,7 @@ const Form: React.FC = () => {
   const router = useRouter();
   const handleSubmit = async (event: { preventDefault: () => void; }) => {
     event.preventDefault();
+    setIsLoading(true);
     const ingredients = form.map((ingredient) => ingredient.name);
     const response = await axios.post('/api/generate-recipe-suggestions', { ingredients, mood });
     router.push({
@@ -101,12 +104,16 @@ const Form: React.FC = () => {
       <option value="vegetarian">Vegetarian</option>
       <option value="vegan">Vegan</option>
     </select>
-    <button 
-      onClick={handleSubmit} 
-      className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 focus:outline-none focus:ring focus:border-blue-300"
-    >
-      Generate Recipes
-    </button>
+    {isLoading ? (
+  <Loader />
+) : (
+  <button 
+    onClick={handleSubmit} 
+    className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 focus:outline-none focus:ring focus:border-blue-300"
+  >
+    Generate Recipes
+  </button>
+)}
   </div>
 
 

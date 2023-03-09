@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { RecipeContext } from "../components/RecipeProvider";
 
 interface RecipeSuggestionsProps {
   recipeSuggestions?: string | string[]; // Make the prop optional
@@ -6,18 +7,45 @@ interface RecipeSuggestionsProps {
 }
 
 const RecipeSuggestions: React.FC<RecipeSuggestionsProps> = ({ recipeSuggestions, mood }) => {
-  // If recipeSuggestions is not available, return null
-  if (!recipeSuggestions) {
-    return null;
-  }
+  const { savedRecipes, saveRecipe } = useContext(RecipeContext);
+
+  const [localRecipeSuggestions, setLocalRecipeSuggestions] = useState<string[]>(() => {
+    if (typeof window !== "undefined" && window.localStorage) {
+      const storedRecipeSuggestions = JSON.parse(localStorage.getItem("recipeSuggestions") || "[]");
+      return storedRecipeSuggestions;
+    }
+    return [];
+  });
+
+  useEffect(() => {
+    if (recipeSuggestions) {
+      if (Array.isArray(recipeSuggestions)) {
+        setLocalRecipeSuggestions(recipeSuggestions);
+      } else {
+        setLocalRecipeSuggestions([recipeSuggestions]);
+      }
+    }
+  }, [recipeSuggestions]);
+
+  useEffect(() => {
+    if (localRecipeSuggestions.length > 0) {
+      localStorage.setItem("recipeSuggestions", JSON.stringify(localRecipeSuggestions));
+    }
+  }, [localRecipeSuggestions]);
 
   let paragraphs: string[] = [];
 
-  if (Array.isArray(recipeSuggestions)) {
+  if (localRecipeSuggestions.length > 0) {
+    paragraphs = localRecipeSuggestions.flatMap((s) => s.split("\n\n"));
+  } else if (Array.isArray(recipeSuggestions)) {
     paragraphs = recipeSuggestions.flatMap((s) => s.split("\n\n"));
   } else {
-    paragraphs = recipeSuggestions.split("\n\n");
+    paragraphs = recipeSuggestions?.split("\n\n") || [];
   }
+
+  const handleSaveRecipe = (recipe: string) => {
+    saveRecipe(recipe);
+  };
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -29,6 +57,7 @@ const RecipeSuggestions: React.FC<RecipeSuggestionsProps> = ({ recipeSuggestions
               {line}
             </p>
           ))}
+          <button onClick={() => handleSaveRecipe(paragraph)}>Save Recipe</button>
         </div>
       ))}
     </div>
@@ -36,5 +65,3 @@ const RecipeSuggestions: React.FC<RecipeSuggestionsProps> = ({ recipeSuggestions
 };
 
 export default RecipeSuggestions;
-
-

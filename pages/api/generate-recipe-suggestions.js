@@ -59,7 +59,7 @@ export default async function handler(req, res) {
       const response = await openai.createCompletion({
         model: "text-davinci-003",
         prompt: prompt,
-        max_tokens: 500,
+        max_tokens: 1000,
       });
       if (response.status === 200) {
         const recipeSuggestions = [response.data.choices[0].text.trim()];

@@ -8,15 +8,20 @@ import {
   XMarkIcon,
   BuildingStorefrontIcon,
   ChevronLeftIcon,
+  HomeIcon,
   
 } from '@heroicons/react/24/outline'
 import { useRouter } from 'next/router'
-import RecipeSuggestions from '../components/RecipeSuggestions'
+import RecipeSave from '../components/RecipeSave'
 import Image from 'next/image';
 import Slider from '../components/rightslider';
 
 
+
+
+
 const navigation = [
+  { name: 'Home', href: '/', icon: HomeIcon, current: false },
   { name: 'Pantry', href: '/Pantry', icon: BuildingStorefrontIcon, current: false },
   { name: 'Explainer (coming soon)', href: '#', icon: PresentationChartBarIcon, current: false },
   { name: 'Saved Recipes (coming soon)', href: '/SavedRecipes', icon: FolderIcon, current: false },
@@ -26,9 +31,9 @@ const navigation = [
 function classNames(...classes: (string | undefined | null)[]): string {
   return classes.filter(Boolean).join(' ')
 }
-const NavBar = () => {
+const SavedRecipes = () => {
   const router = useRouter();
-  const recipeSuggestions: string | string[] = router.query.recipeSuggestions || "";
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -173,7 +178,6 @@ const NavBar = () => {
             <div className="flex flex-shrink-0 border-t border-gray-200 p-4">
               <a href="#" className="group block w-full flex-shrink-0">
               <div>
-
     </div>
               </a>
             </div>
@@ -193,13 +197,16 @@ const NavBar = () => {
           <main className="flex-1">
       <div className="py-6">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
-          <h1 className="text-2xl font-semibold text-gray-900">Recipe Suggestions</h1>
+          <h1 className="text-2xl font-semibold text-gray-900">Saved Recipes</h1>
         </div>
         <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
           <div className="py-4">
-            <div >
-              <RecipeSuggestions recipeSuggestions={recipeSuggestions} />
-            </div>
+          <div className="flex flex-col h-screen">
+  <div className="flex-grow">
+    {/* Navigation links */}
+  </div>
+  <RecipeSave />
+</div>
           </div>
         </div>
       </div>
@@ -209,4 +216,4 @@ const NavBar = () => {
     </>
   )
 }
-export default NavBar
+export default SavedRecipes

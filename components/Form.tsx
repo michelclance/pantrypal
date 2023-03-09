@@ -48,7 +48,7 @@ const Form: React.FC = () => {
   };
 
   return (
-    <div className="px-10">
+    <div className="px-10 mx-auto">
       <Link href="/">
         <HomeIcon className="h-9 w-9 mr-1 flex items-center text-gray-800" />
       </Link>
@@ -87,23 +87,23 @@ const Form: React.FC = () => {
         </button>
       </div>
       <div className="flex flex-col items-end mt-10 mb-6">
-    <select 
-      name="mood" 
-      value={mood} 
-      onChange={(event) => setMood(event.target.value)} 
-      className="px-4 py-2 border border-gray-300 mb-4 focus:outline-none focus:ring focus:border-blue-300"
-    >
-      <option value="">Select a mood</option>
-      <option value="spicy_and_hearty">Spicy and Hearty</option>
-      <option value="sweet_and_savory">Sweet and Savory</option>
-      <option value="healthy_and_light">Healthy and Light</option>
-      <option value="quick_and_easy">Quick and Easy</option>
-      <option value="comfort_food">Comfort Food</option>
-      <option value="fancy">Fancy</option>
-      <option value="kid_friendly">Kid Friendly</option>
-      <option value="vegetarian">Vegetarian</option>
-      <option value="vegan">Vegan</option>
-    </select>
+      <select 
+  name="mood" 
+  value={mood} 
+  onChange={(event) => setMood(event.target.value)} 
+  className="px-4 py-2 border border-gray-300 mb-4 focus:outline-none focus:ring focus:border-blue-300"
+>
+  <option value="">Select a mood</option>
+  <option value="spicy_and_hearty">🌶️ Spicy and Hearty</option>
+  <option value="sweet_and_savory">🍭 Sweet and Savory</option>
+  <option value="healthy_and_light">🥗 Healthy and Light</option>
+  <option value="quick_and_easy">🏎️ Quick and Easy</option>
+  <option value="comfort_food">🍲 Comfort Food</option>
+  <option value="fancy">🍾 Fancy</option>
+  <option value="kid_friendly">👹 Kid Friendly</option>
+  <option value="vegetarian">🥦 Vegetarian</option>
+  <option value="vegan">🌱 Vegan</option>
+</select>
     {isLoading ? (
   <Loader />
 ) : (

@@ -24,7 +24,7 @@ const Loader = () => {
           textShadow: "1px 1px 1px rgba(0,0,0,0.5)"
         }}
       >
-        let the AI is cook...
+        your little ass is going to wait. you got that?
       </p>
       <img src="/images/loading.gif" alt="loading..." />
     </div>

@@ -50,21 +50,21 @@ const Form: React.FC = () => {
     <>
     <div className="flex-1 p-4 sm:p-6 md:p-8">
       <h2 className="text-2xl sm:text-3xl md:text-4xl font-medium text-center mb-6">Your Pantry</h2>
-      <div className="flex flex-wrap items-center justify-center space-x-4 mb-8">
-        <input
-          type="text"
-          name="name"
-          value={newIngredient.name}
-          onChange={handleInputChange}
-          placeholder="Name"
-          className="flex-1 py-2 px-2 md:px-3 border border-gray-400 rounded-lg"
-        />
-        <select
-          name="category"
-          value={newIngredient.category}
-          onChange={handleInputChange}
-          className="py-2 px-2 md:px-3 border border-gray-400 rounded-lg"
-        >
+      <div className="flex flex-col sm:flex-row items-center justify-center space-x-4 mb-8">
+  <input
+    type="text"
+    name="name"
+    value={newIngredient.name}
+    onChange={handleInputChange}
+    placeholder="Name"
+    className="flex-1 py-2 px-2 md:px-3 border border-gray-400 rounded-lg my-2 sm:my-0"
+  />
+  <select
+    name="category"
+    value={newIngredient.category}
+    onChange={handleInputChange}
+    className="py-2 px-2 md:px-3 border border-gray-400 rounded-lg my-2 sm:my-0"
+  >
           <option value="">Category</option>
           {categories.map((category) => (
             <option key={category} value={category}>
@@ -74,12 +74,12 @@ const Form: React.FC = () => {
         </select>
         <button
           onClick={handleAddIngredient}
-          className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 sm:mx-auto"
+          className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 my-2 sm:my-0"
         >
           Add
         </button>
       </div>
-      <div className="flex flex-wrap items-center justify-center space-x-4 mb-8">
+      <div className="flex flex-col sm:flex-row items-center justify-center space-x-4 mb-8">
         <select
           name="mood"
           value={mood}
@@ -102,13 +102,13 @@ const Form: React.FC = () => {
         ) : (
           <button
             onClick={handleSubmit}
-            className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
+            className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 my-2 sm:my-0"
             >
             Generate Recipes
             </button>
             )}
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pl-6">
     {[...new Set(form.map(ingredient => ingredient.category).sort())].map(category => (
       <div key={category} className="bg-white p-4 rounded-lg shadow-md mt-4 md:mt-10 md:w-96 md:px-10">
         <h3 className="text-lg font-bold mb-2">{category}:</h3>

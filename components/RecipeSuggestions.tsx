@@ -3,7 +3,7 @@ import { RecipeContext } from "../components/RecipeProvider";
 import Notification from "./Notification";
 
 interface RecipeSuggestionsProps {
-  recipeSuggestions?: string | string[]; // Make the prop optional
+  recipeSuggestions?: string | string[];
   mood?: string;
 }
 
@@ -63,42 +63,43 @@ const RecipeSuggestions: React.FC<RecipeSuggestionsProps> = ({ recipeSuggestions
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      {paragraphs.map((paragraph, index) => (
-        <div key={index} className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg hover:bg-gray-100 transition duration-200 relative">
-          {mood && <h2 className="text-lg font-bold mb-2">{`${mood} Recipe`}</h2>}
-          {paragraph.split("\n").map((line, i) => (
-  <p key={i} className={`text-gray-600 mb-2 ${i === 0 ? 'font-bold' : ''}`}>
-    {line}
-  </p>
-))}
-
-          {savedRecipes.includes(paragraph) ? (
-            <button
-              disabled
-              className="bg-gray-500 text-white font-bold py-2 px-4 mt-4 rounded-lg transition duration-200 absolute bottom-1 right-1"
-            >
-              Saved
-            </button>
-          ) : (
-            <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-4 rounded-lg transition duration-200 absolute bottom-1 right-1"
-              onClick={() => handleSaveRecipe(paragraph)}
-            >
-              Save Recipe
-            </button>
-          )}
-          {showNotification && (
-        <Notification onClose={closeNotification} />
-
-          )}
+      {paragraphs.length > 0 ? (
+        paragraphs.map((paragraph, index) => (
+          <div key={index} className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg hover:bg-gray-100 transition duration-200 relative">
+            {mood && <h2 className="text-lg font-bold mb-2">{`${mood} Recipe`}</h2>}
+            {paragraph.split("\n").map((line, i) => (
+              <p key={i} className={`text-gray-600 mb-2 ${i === 0 ? 'font-bold' : ''}`}>
+                {line}
+              </p>
+            ))}
+  
+            {savedRecipes.includes(paragraph) ? (
+              <button
+                disabled
+                className="bg-gray-500 text-white font-bold py-2 px-4 mt-4 rounded-lg transition duration-200 absolute bottom-1 right-1"
+              >
+                Saved
+              </button>
+            ) : (
+              <button
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-4 rounded-lg transition duration-200 absolute bottom-1 right-1"
+                onClick={() => handleSaveRecipe(paragraph)}
+              >
+                Save Recipe
+              </button>
+            )}
+            {showNotification && (
+              <Notification onClose={closeNotification} />
+            )}
+          </div>
+        ))
+      ) : (
+        <div className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg hover:bg-gray-100 transition duration-200 relative">
+          <p className="text-gray-600 mb-2 font-bold">add ingredients to pantry then click generate recipes for suggestions</p>
         </div>
-      ))}
+      )}
     </div>
   );
-  
-  
-  
-  
   
 };
 

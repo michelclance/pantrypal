@@ -51,7 +51,7 @@ export default async function handler(req, res) {
         break;
       // add more cases for other moods
       default:
-        prompt = `Here is a list of ingredients: ${ingredients}. Suggest 5 recipes using these ingredients. Structure the response Recipe: \n Ingredients: \n Instructions:`;
+        prompt = `Here is a list of ingredients: ${ingredients}. Suggest 5 recipes using these ingredients. Include the recipe name, exact ingredients, cooktime and step by step instructions. Structure the response Recipe: \n Ingredients: \n Instructions:`;
         break;
     }
   

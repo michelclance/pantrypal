@@ -19,7 +19,7 @@ import Slider from '../components/rightslider';
 const navigation = [
   { name: 'Pantry', href: '/Pantry', icon: BuildingStorefrontIcon, current: false },
   { name: 'Explainer (coming soon)', href: '#', icon: PresentationChartBarIcon, current: false },
-  { name: 'Saved Recipes (coming soon)', href: '/SavedRecipes', icon: FolderIcon, current: false },
+  { name: 'Saved Recipes', href: '/SavedRecipes', icon: FolderIcon, current: false },
   { name: 'Feedback', href: '/Feedback', icon: InboxIcon, current: false },
 ]
 

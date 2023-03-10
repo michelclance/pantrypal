@@ -11,18 +11,12 @@ import {
   HomeIcon,
   
 } from '@heroicons/react/24/outline'
-import { useRouter } from 'next/router'
-import RecipeSave from '../components/RecipeSave'
 import Image from 'next/image';
-import Slider from '../components/rightslider';
-
-
-
+import Form from './Form';
 
 
 const navigation = [
   { name: 'Home', href: '/', icon: HomeIcon, current: false },
-  { name: 'Pantry', href: '/Pantry', icon: BuildingStorefrontIcon, current: false },
   { name: 'Explainer (coming soon)', href: '#', icon: PresentationChartBarIcon, current: false },
   { name: 'Saved Recipes', href: '/SavedRecipes', icon: FolderIcon, current: false },
   { name: 'Feedback', href: '/Feedback', icon: InboxIcon, current: false },
@@ -186,7 +180,7 @@ const Sidebar = () => {
           <div className="py-4">
           <div className="flex flex-col h-screen">
   <div className="flex-grow">
-    {/* Navigation links */}
+    <Form />
   </div>
 </div>
           </div>

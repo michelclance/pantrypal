@@ -24,7 +24,6 @@ const navigation = [
   { name: 'Home', href: '/', icon: HomeIcon, current: false },
   { name: 'Pantry', href: '/Pantry', icon: BuildingStorefrontIcon, current: false },
   { name: 'Explainer', href: '#', icon: PresentationChartBarIcon, current: false },
-  { name: 'Saved Recipes', href: '/SavedRecipes', icon: FolderIcon, current: false },
   { name: 'Feedback', href: '/Feedback', icon: InboxIcon, current: false },
 ]
 
@@ -202,9 +201,9 @@ const SavedRecipes = () => {
           <div className="py-4">
           <div className="flex flex-col h-screen">
   <div className="flex-grow">
-    {/* Navigation links */}
-  </div>
   <RecipeSave />
+  </div>
+
 </div>
           </div>
         </div>

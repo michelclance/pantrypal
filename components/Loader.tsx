@@ -9,22 +9,26 @@ const Loader = () => {
         left: 0,
         right: 0,
         bottom: 0,
+        height: "100%",
+        width: "100%",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "rgba(0, 0, 0, 0.5)",
         zIndex: 9999,
-        flexDirection: "column"
+        flexDirection: "column",
+        backdropFilter: "blur(10px)",
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
       }}
     >
-      <p style={{
+      <p
+        style={{
           color: "black",
           fontSize: "24px",
           fontFamily: "Roboto, sans-serif",
-          textShadow: "1px 1px 1px rgba(0,0,0,0.5)"
+          textShadow: "1px 1px 1px rgba(0,0,0,0.5)",
         }}
       >
-        your little ass is going to wait. you got that?
+        Your little ass is going to wait. You got that?
       </p>
       <img src="/images/loading.gif" alt="loading..." />
     </div>
@@ -32,6 +36,7 @@ const Loader = () => {
 };
 
 export default Loader;
+
 
 
 

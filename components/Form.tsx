@@ -2,9 +2,8 @@ import React, { useState, useContext, useEffect, ChangeEvent } from 'react';
 import { FormContext,  Ingredient } from '../components/contextobject';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
-import { HomeIcon } from '@heroicons/react/24/outline';
 import Loader from './Loader';
+
 
 const Form: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -48,73 +47,67 @@ const Form: React.FC = () => {
   };
 
   return (
-    <div className="px-10 mx-auto">
-      <Link href="/">
-        <HomeIcon className="h-9 w-9 mr-1 flex items-center text-gray-800" />
-      </Link>
-  
-      <h2 className="text-2xl text-center font-medium">Your Pantry</h2>
-
-      <div className="flex mt-6 items-center">
-        <input
-          type="text"
-          name="name"
-          value={newIngredient.name}
-          onChange={handleInputChange}
-          placeholder="Name"
-          className="w-full py-2 px-3 border border-gray-400 rounded-lg"
-        />
-
-        <select 
-          name="category" 
-          value={newIngredient.category} 
-          onChange={handleInputChange} 
-          className="py-2 px-3 border border-gray-400 rounded-lg ml-3"
-        >
-          <option value="">Category</option>
-          {categories.map(category => (
-            <option key={category} value={category}>
-              {category}
-            </option>
-          ))}
-        </select>
-        
-        <button 
-          onClick={handleAddIngredient} 
-          className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 ml-3"
-        >
-          Add
-        </button>
-      </div>
-      <div className="flex flex-col items-end mt-10 mb-6">
-      <select 
-  name="mood" 
-  value={mood} 
-  onChange={(event) => setMood(event.target.value)} 
-  className="px-4 py-2 border border-gray-300 mb-4 focus:outline-none focus:ring focus:border-blue-300"
->
-  <option value="">Select a mood</option>
-  <option value="spicy_and_hearty">🌶️ Spicy and Hearty</option>
-  <option value="sweet_and_savory">🍭 Sweet and Savory</option>
-  <option value="healthy_and_light">🥗 Healthy and Light</option>
-  <option value="quick_and_easy">🏎️ Quick and Easy</option>
-  <option value="comfort_food">🍲 Comfort Food</option>
-  <option value="fancy">🍾 Fancy</option>
-  <option value="kid_friendly">👹 Kid Friendly</option>
-  <option value="vegetarian">🥦 Vegetarian</option>
-  <option value="vegan">🌱 Vegan</option>
-</select>
-    {isLoading ? (
-  <Loader />
-) : (
-  <button 
-    onClick={handleSubmit} 
-    className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 focus:outline-none focus:ring focus:border-blue-300"
-  >
-    Generate Recipes
-  </button>
-)}
-  </div>
+    <> 
+      <div className="flex-1 pr-14 py-6">
+        <h2 className="text-2xl text-center font-medium mb-6">Your Pantry</h2>
+        <div className="flex items-center space-x-4 mb-8">
+          <input
+            type="text"
+            name="name"
+            value={newIngredient.name}
+            onChange={handleInputChange}
+            placeholder="Name"
+            className="flex-1 py-2 px-3 border border-gray-400 rounded-lg"
+          />
+          <select 
+            name="category" 
+            value={newIngredient.category} 
+            onChange={handleInputChange} 
+            className="py-2 px-3 border border-gray-400 rounded-lg"
+          >
+            <option value="">Category</option>
+            {categories.map(category => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
+          <button 
+            onClick={handleAddIngredient} 
+            className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+          >
+            Add
+          </button>
+        </div>
+        <div className="flex items-center space-x-4 mb-8">
+          <select 
+            name="mood" 
+            value={mood} 
+            onChange={(event) => setMood(event.target.value)} 
+            className="flex-1 py-2 px-3 border border-gray-400 rounded-lg"
+          >
+            <option value="">Select a mood</option>
+            <option value="spicy_and_hearty">🌶️ Spicy and Hearty</option>
+            <option value="sweet_and_savory">🍭 Sweet and Savory</option>
+            <option value="healthy_and_light">🥗 Healthy and Light</option>
+            <option value="quick_and_easy">🏎️ Quick and Easy</option>
+            <option value="comfort_food">🍲 Comfort Food</option>
+            <option value="fancy">🍾 Fancy</option>
+            <option value="kid_friendly">👹 Kid Friendly</option>
+            <option value="vegetarian">🥦 Vegetarian</option>
+            <option value="vegan">🌱 Vegan</option>
+          </select>
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <button 
+              onClick={handleSubmit} 
+              className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
+            >
+              Generate Recipes
+            </button>
+          )}
+        </div>
 
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -135,6 +128,7 @@ const Form: React.FC = () => {
   ))}
 </div>
 </div>
+</>
 
     );
 };

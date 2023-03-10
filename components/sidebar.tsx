@@ -23,7 +23,7 @@ import Slider from '../components/rightslider';
 const navigation = [
   { name: 'Home', href: '/', icon: HomeIcon, current: false },
   { name: 'Pantry', href: '/Pantry', icon: BuildingStorefrontIcon, current: false },
-  { name: 'Explainer', href: '#', icon: PresentationChartBarIcon, current: false },
+  { name: 'Explainer (coming soon)', href: '#', icon: PresentationChartBarIcon, current: false },
   { name: 'Saved Recipes', href: '/SavedRecipes', icon: FolderIcon, current: false },
   { name: 'Feedback', href: '/Feedback', icon: InboxIcon, current: false },
 ]
@@ -31,29 +31,14 @@ const navigation = [
 function classNames(...classes: (string | undefined | null)[]): string {
   return classes.filter(Boolean).join(' ')
 }
-const SavedRecipes = () => {
-  const router = useRouter();
-
+const Sidebar = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [open, setOpen] = useState(false);
-
  
   return (
-    <>
+    <div > 
     <header>
       <title>Certified Munch</title>
     </header>
-    <div>
-    <button
-  type="button"
-  onClick={() => setOpen(true)}
-  className="fixed right-4 bottom-4 w-16 h-16 text-black rounded-full flex items-center justify-center focus:outline-none "
->
-  <ChevronLeftIcon className="h-6 w-6" />
-</button>
-
-      <Slider open={open} setOpen={setOpen} />
-    </div>
       <div>
         <Transition.Root show={sidebarOpen} as={Fragment}>
           <Dialog as="div" className="relative z-40 md:hidden" onClose={setSidebarOpen}>
@@ -196,7 +181,6 @@ const SavedRecipes = () => {
           <main className="flex-1">
       <div className="py-6">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
-          <h1 className="text-2xl font-semibold text-gray-900">Saved Recipes</h1>
         </div>
         <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
           <div className="py-4">
@@ -204,7 +188,6 @@ const SavedRecipes = () => {
   <div className="flex-grow">
     {/* Navigation links */}
   </div>
-  <RecipeSave />
 </div>
           </div>
         </div>
@@ -212,7 +195,8 @@ const SavedRecipes = () => {
     </main>
         </div>
       </div>
-    </>
+    </div>
   )
 }
-export default SavedRecipes
+
+export default Sidebar

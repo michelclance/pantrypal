@@ -55,16 +55,17 @@ const RecipeSuggestions: React.FC<RecipeSuggestionsProps> = ({ recipeSuggestions
     setShowNotification(false);
   };
 
-  const handleRecipeSaved = (recipeId: string) => {
-    setSavedRecipeIds((prevIds) => [...prevIds, recipeId]);
-  };
-
-  const isRecipeSaved = (recipeId: string) => savedRecipeIds.includes(recipeId);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      {paragraphs.length > 0 ? (
-        paragraphs.map((paragraph, index) => (
+ {!localRecipeSuggestions.length && !recipeSuggestions ? (
+  <div className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg hover:bg-gray-100 transition duration-200 relative">
+    <p className="text-gray-600 mb-2 font-bold">
+      add ingredients to pantry then click generate recipes for suggestions
+    </p>
+  </div>
+) : (
+  paragraphs.map((paragraph, index) => (
           <div key={index} className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg hover:bg-gray-100 transition duration-200 relative">
             {mood && <h2 className="text-lg font-bold mb-2">{`${mood} Recipe`}</h2>}
             {paragraph.split("\n").map((line, i) => (
@@ -93,13 +94,10 @@ const RecipeSuggestions: React.FC<RecipeSuggestionsProps> = ({ recipeSuggestions
             )}
           </div>
         ))
-      ) : (
-        <div className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg hover:bg-gray-100 transition duration-200 relative">
-          <p className="text-gray-600 mb-2 font-bold">add ingredients to pantry then click generate recipes for suggestions</p>
-        </div>
-      )}
+      ) }
     </div>
   );
+  
   
 };
 

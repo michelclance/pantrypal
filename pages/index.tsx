@@ -32,8 +32,6 @@ const NavBar = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [open, setOpen] = useState(false);
 
- 
-  
   return (
     <>
     <header>
@@ -126,6 +124,7 @@ const NavBar = () => {
                   </div>
                   <div className="flex flex-shrink-0 border-t border-gray-200 p-4">
                     <a href="#" className="group block flex-shrink-0">
+  
                     </a>
                   </div>
                 </Dialog.Panel>
@@ -170,8 +169,9 @@ const NavBar = () => {
                 ))}
               </nav>
             </div>
-            <div className="flex flex-shrink-0 border-t border-gray-200 p-4">
+            <div className="flex flex-shrink-0 border-gray-200 p-4">
               <a href="#" className="group block w-full flex-shrink-0">
+        
               <div>
 
     </div>
@@ -197,7 +197,7 @@ const NavBar = () => {
         </div>
         <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
           <div className="py-4">
-            <div >
+            <div>
               <RecipeSuggestions recipeSuggestions={recipeSuggestions} />
             </div>
           </div>

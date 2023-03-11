@@ -153,7 +153,7 @@ const Sidebar = () => {
                 ))}
               </nav>
             </div>
-            <div className="flex flex-shrink-0 border-t border-gray-200 p-4">
+            <div className="flex flex-shrink-0 border-gray-200 p-4">
               <a href="#" className="group block w-full flex-shrink-0">
               <div>
     </div>

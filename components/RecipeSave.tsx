@@ -46,23 +46,23 @@ const RecipeSave: React.FC = () => {
       {filteredRecipes.map((recipe, index) => (
         <div
           key={index}
-          className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg hover:bg-gray-100 transition duration-200"
+          className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg hover:bg-gray-100 transition duration-200 relative"
         >
             {recipe.split("\n").map((line, i) => (
-  <p key={i} className={`text-gray-600 mb-2 ${i === 0 ? 'font-bold' : ''}`}>
-    {line}
-  </p>
-))}
+              <p key={i} className={`text-gray-600 mb-2 ${i === 0 ? 'font-bold' : ''}`}>
+                {line}
+              </p>
+            ))}
           <button
             onClick={() => handleRemoveRecipe(recipe)}
-            className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-200"
+            className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-200 absolute bottom-1 right-1"
           >
             Remove Recipe
           </button>
           {showConfirmation && recipeToRemove === recipe && (
             <ConfirmationDialog
-            confirmRemoveRecipe={confirmRemoveRecipe}
-            cancelRemoveRecipe={cancelRemoveRecipe}
+              confirmRemoveRecipe={confirmRemoveRecipe}
+              cancelRemoveRecipe={cancelRemoveRecipe}
             />
           )}
         </div>

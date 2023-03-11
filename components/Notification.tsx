@@ -1,19 +1,31 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Transition } from '@headlessui/react'
 import { CheckCircleIcon } from '@heroicons/react/24/outline'
 import { XMarkIcon } from '@heroicons/react/20/solid'
-
 type NotificationProps = {
-    onClose: () => void;
-  }
-  
-  export default function Notification({ onClose }: NotificationProps) {
-    const [show, setShow] = useState(true)
-  
-    const handleClose = () => {
+  onClose: () => void;
+  duration?: number; // optional duration prop in milliseconds
+};
+
+export default function Notification({ onClose, duration = 2000 }: NotificationProps) {
+  const [show, setShow] = useState(true);
+
+  useEffect(() => {
+    // set a timer to automatically close the notification after duration milliseconds
+    const timer = setTimeout(() => {
       setShow(false);
       onClose();
-    }
+    }, duration);
+
+    // clean up the timer when the component unmounts or the duration prop changes
+    return () => clearTimeout(timer);
+  }, [duration, onClose]);
+
+  const handleClose = () => {
+    setShow(false);
+    onClose();
+  };
+
   return (
     <>
       {/* Global notification live region, render this permanently at the end of the document */}
@@ -41,19 +53,11 @@ type NotificationProps = {
                   </div>
                   <div className="ml-3 w-0 flex-1 pt-0.5">
                     <p className="text-sm font-medium text-gray-900">Recipe saved!</p>
-                    <p className="mt-1 text-sm text-gray-500">Check out Saved Recipes for all...Saved Recipes :3</p>
-
+                    <p className="mt-1 text-sm text-gray-500">
+                      Check out Saved Recipes for all...Saved Recipes :3
+                    </p>
                   </div>
-                  <div className="ml-4 flex flex-shrink-0">
-                    <button
-                      type="button"
-                      className="inline-flex rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                      onClick={handleClose}
-                    >
-                      <span className="sr-only">Close</span>
-                      <XMarkIcon className="h-5 w-5" aria-hidden="true" />
-                    </button>
-                  </div>
+        
                 </div>
               </div>
             </div>
@@ -61,5 +65,5 @@ type NotificationProps = {
         </div>
       </div>
     </>
-  )
+  );
 }
